@@ -16,3 +16,4 @@ jpa:
         hbm2ddl:
           auto: update
         show_sql: true
+log-file: "C:\\Users\\ruyov\\Documents\\Micronaut-api\\complete\\src\\main\\java\\example\\micronaut\\parser\\games.log"

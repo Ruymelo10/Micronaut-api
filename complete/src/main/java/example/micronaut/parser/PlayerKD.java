@@ -1,4 +1,4 @@
-package example.micronaut.ParserQuake;
+package example.micronaut.parser;
 
 import java.util.HashMap;
 import java.util.Map;

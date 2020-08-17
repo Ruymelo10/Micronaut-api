@@ -1,26 +1,45 @@
-package example.micronaut.ParserQuake;
+package example.micronaut.parser;
 
+import example.micronaut.GameRepository;
+import example.micronaut.GameResponse;
+import io.micronaut.context.annotation.Value;
 import io.micronaut.context.event.StartupEvent;
 import io.micronaut.runtime.event.annotation.EventListener;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.nio.file.Files;
 import java.util.Map.Entry;
 @Singleton
 public class Parser{
+    @Value("${log-file}")
+    String file;
+    @Inject
+    GameRepository gameRepository;
     @EventListener
        public void onStartup (StartupEvent event){
            List<String> lines;
-           System.out.println("Digite o diretório onde se econtra o arquivo games.log: ");
-           final String direc = new Scanner(System.in).next();
            try {
-               lines= Files.readAllLines(Paths.get(direc));
+               lines= Files.readAllLines(Paths.get(file));
                ParseGame game = new ParseGame(lines);
                List<Game> games = game.ParseGames();
+               for(int i = 0; i<games.size();i++){
+                   List<String> players = new ArrayList<>();
+                   Map<String, Integer> totalkillsplayer = new HashMap<>();
+                   int Id = i;
+                   int totalkills = totalkills(games.get(i));
+                   for (Player player: games.get(i).getPlayers()){
+                       players.add(player.getName());
+                   }
+                   for (Player player: games.get(i).getPlayers()){
+                       totalkillsplayer.put(player.getName(),player.getKd().getValidKills());
+                   }
+                   GameResponse gameResponse = new GameResponse(totalkills,players,totalkillsplayer);
+                   gameRepository.insert(Id,gameResponse);
+               }
                printGames(games);
        }
            catch (IOException e){
@@ -55,10 +74,7 @@ public class Parser{
 
            for (Game game : games){
                System.out.println(game.getGamename()+" {");
-               int totalkills = 0;
-               for(Player player: game.getPlayers()){
-                  totalkills = totalkills + player.getKd().getTotalDeaths();
-               }
+               int totalkills = totalkills(game);
                System.out.println("Total Kills: "+ totalkills);
                System.out.print("players: [");
                for (Player player: game.getPlayers()){
@@ -74,7 +90,15 @@ public class Parser{
                System.out.println("}");
            }
 
+
        }
+            public Integer totalkills(Game game){
+                int totalkills = 0;
+                for(Player player: game.getPlayers()){
+                    totalkills = totalkills + player.getKd().getTotalDeaths();
+                }
+                return totalkills;
+            }
 
 
 }

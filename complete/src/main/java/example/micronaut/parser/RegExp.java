@@ -1,4 +1,4 @@
-package example.micronaut.ParserQuake;
+package example.micronaut.parser;
 
 import java.util.regex.Matcher;
         import java.util.regex.Pattern;

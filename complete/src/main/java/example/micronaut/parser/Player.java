@@ -1,4 +1,4 @@
-package example.micronaut.ParserQuake;
+package example.micronaut.parser;
 
 public class Player {
     private String id, name;
