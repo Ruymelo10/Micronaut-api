@@ -1,8 +1,7 @@
-
+# Micronaut-api QuakeParser
 ###### Appi feita com o framework Micronaut. O desenvolvimento do parser foi feito no repositório "github.com/Ruymelo10/Quake-parser". Após a conclusão do parser, foi criado a base de um api usando Micronaut e foi inserida nesta os arquivos que realizam o parser do arquivo games.log 
 ### Instruções para rodar
 - Cerifique-se de que você tem uma versão Java 8 SDK ou acima instalada e também uma IDE adequada, como por exemplo o Intellij. Caso esteja no intellij, habilite annotation processing em compiler. 
-- Instale o Micronaut. Se for o caso, de uma olhada em  micronaut-projects.github.io/micronaut-starter/latest/guide/#installation
 - Com a pasta baixada, va no arquivo application.yml na pasta src/main/resources. Em seguida troque a variável "log-file" para o PATH do arquivo games.log na sua máquina
 - No terminal, dentro da pasta complete insira o comando  ./gradlew build
 - Ainda no terminal, insira o comando  ./gradlew run
